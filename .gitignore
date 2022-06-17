@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.idea
 
 # C extensions
 *.so
@@ -127,3 +128,19 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# vs code settigs
+.vscode/
+
+# result pickle files
+output*/*.pkl
+
+inputs/ICCAD/*/result*
+inputs/ICCAD/CS1/*.sh
+inputs/ICCAD/CS1/figure/
+inputs/ICCAD/CS1/settings
+inputs/ICCAD/CS1/*.pkl
+inputs/ICCAD/CS1/*.pickle*
+
+# result json files
+outputs*/*.json
