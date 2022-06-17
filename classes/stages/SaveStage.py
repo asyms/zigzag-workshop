@@ -81,7 +81,7 @@ class SimpleSaveStage(Stage):
         
         for id, (cme, extra_info) in enumerate(substage.run()):
             cme: CostModelEvaluation
-            filename = self.dump_filename_pattern.format(datetime=datetime.now().isoformat())
+            filename = self.dump_filename_pattern.format(datetime=datetime.now().isoformat().replace(":", "-"))
             self.save_to_json(cme, filename=filename)
             logger.info(f"Saved CostModelEvaluation with energy {cme.energy_total:.3e} and latency {cme.latency_total2:.3e} to {filename}")
             yield cme, extra_info
