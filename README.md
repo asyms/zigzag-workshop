@@ -19,4 +19,4 @@ The inputs folder provides some example accelerator/workload/settings.
 
 For example, the xception snippet running on a single core accelerator using loma:
 
-`$ python main.py --workload inputs.examples.workloads.xception_block --accelerator inputs.examples.hardware.single_core`
+`$ python main.py --workload inputs.workshop.workload --accelerator inputs.workload.accelerator`
