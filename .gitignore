@@ -144,3 +144,6 @@ inputs/ICCAD/CS1/*.pickle*
 
 # result json files
 outputs*/*.json
+
+# result png files
+outputs*/*.png
