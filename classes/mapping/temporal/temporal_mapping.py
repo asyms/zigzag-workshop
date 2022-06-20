@@ -32,11 +32,17 @@ class TemporalMapping:
         to compute instant required memory BW in combined_mapping.py '''
         self.calc_top_r_and_ir_loop()
 
+    def __str__(self):
+        return str(self.mapping_dic_stationary)
+
+    def __repr__(self):
+        return str(self)
+
     def __jsonrepr__(self):
         """
         JSON representation of this object to save it to a json file.
         """
-        return {"temporal_mapping": self.mapping_dic_origin}
+        return {"temporal_mapping": self.mapping_dic_stationary}
 
     def innermost_stationary_loop_merge_down(self):
         """
