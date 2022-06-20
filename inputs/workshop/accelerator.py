@@ -25,11 +25,16 @@ def memory_hierarchy(multiplier_array):
     """Memory hierarchy variables"""
     ''' size = #bit '''
 
-    gb = MemoryInstance(name="sram_32B", size=32*8, r_bw=32, w_bw=64, r_cost=20, w_cost=25, area=0)
+    rf_8B = MemoryInstance(name="rf_8B", size=8*8, r_bw=32, w_bw=64, r_cost=15, w_cost=20, area=0)
+    rf_16B = MemoryInstance(name="rf_16B", size=16*8, r_bw=32, w_bw=64, r_cost=20, w_cost=25, area=0)
+    # rf_32B = MemoryInstance(name="rf_32B", size=32*8, r_bw=32, w_bw=64, r_cost=20, w_cost=25, area=0)
     dram = MemoryInstance(name="dram", size=10000000000, r_bw=64, w_bw=64, r_cost=700, w_cost=750, area=0)
 
     memory_hierarchy_graph = MemoryHierarchy(operational_array=multiplier_array)
-    memory_hierarchy_graph.add_memory(memory_instance=gb, operands=('I1', 'I2', 'O'), served_dimensions='all')
+    memory_hierarchy_graph.add_memory(memory_instance=rf_8B, operands=('I1'), served_dimensions=set())
+    memory_hierarchy_graph.add_memory(memory_instance=rf_8B, operands=('I2'), served_dimensions=set())
+    memory_hierarchy_graph.add_memory(memory_instance=rf_16B, operands=('O'), served_dimensions=set())
+    # memory_hierarchy_graph.add_memory(memory_instance=rf_32B, operands=('I1', 'I2', 'O'), served_dimensions="all")
     memory_hierarchy_graph.add_memory(memory_instance=dram, operands=('I1', 'I2', 'O'), served_dimensions='all')
 
 
@@ -47,9 +52,9 @@ def cores():
     return {core1}
 
 
-cores = cores()
-global_buffer = None
 acc_name = "MyAccelerator"
-accelerator = Accelerator(acc_name, cores, global_buffer)
+acc_cores = cores()
+global_buffer = None
+accelerator = Accelerator(acc_name, acc_cores, global_buffer)
 
 a = 1
