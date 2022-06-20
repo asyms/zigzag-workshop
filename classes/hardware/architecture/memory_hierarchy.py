@@ -37,9 +37,7 @@ class MemoryHierarchy(DiGraph):
     def add_memory(self, 
                 memory_instance: MemoryInstance, 
                 operands: Tuple[str, ...], 
-                port_alloc: Tuple[dict, ...] = ({'fh': 'w_port_1', 'tl': 'r_port_1', 'fl': None, 'th': None},
-                                                {'fh': 'w_port_1', 'tl': 'r_port_1', 'fl': None, 'th': None},
-                                                {'fh': 'w_port_1', 'tl': 'r_port_1', 'fl': 'w_port_1', 'th': 'r_port_1'},),
+                port_alloc: Tuple[dict, ...] = None,
                 served_dimensions: Set or str = "all"):
         """
         Adds a memory to the memory hierarchy graph.
@@ -54,6 +52,17 @@ class MemoryHierarchy(DiGraph):
         Each vector in the set is a direction that is served.
         Use 'all' to represent all dimensions (i.e. the memory level is not unrolled).
         """
+
+        if port_alloc is None:
+            # Define the standard port allocation scheme (this assumes one read port and one write port)
+            port_alloc = []
+            for operand in operands:
+                if operand == 'O':
+                    port_alloc.append({'fh': 'w_port_1', 'tl': 'r_port_1', 'fl': 'w_port_1', 'th': 'r_port_1'})
+                else:
+                    port_alloc.append({'fh': 'w_port_1', 'tl': 'r_port_1', 'fl': None, 'th': None})
+            port_alloc = tuple(port_alloc)
+        
         # Assert that if served_dimensions is a string, it is "all"
         if type(served_dimensions) == str:
             assert served_dimensions == "all", "Served dimensions is a string, but is not all."
